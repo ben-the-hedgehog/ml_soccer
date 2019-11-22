@@ -9,9 +9,14 @@ class Player:
 
     def __init__(self, x, y, has_ball, p_id=None):
         self.p_id = p_id
-        self.x = x
-        self.y = y
-        self.has_ball = has_ball
+        self.initial_x = self.x = x
+        self.initial_y = self.y = y
+        self.start_with_ball = self.has_ball = has_ball
+
+    def reset(self):
+        self.x = self.initial_x
+        self.y = self.initial_y
+        self.has_ball = self.start_with_ball
 
     def update_state(self, x, y, has_ball):
         self.x = x
@@ -42,6 +47,11 @@ class World:
         self.grid = []
         self.actions = ['N', 'S', 'E', 'W', 'ST']
         self.commentator = False
+
+    def reset(self):
+        for _, player in self.players.items():
+            player.reset()
+
 
     def init_grid(self):
         """ Initializes grid for plotting.

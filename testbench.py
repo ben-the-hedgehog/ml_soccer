@@ -64,6 +64,7 @@ def main():
     world.set_commentator_on()
 
     world.plot_grid()
+    initial_state = world.map_player_state()
 
     print("actions: [N: 0, S: 1, E: 2, W: 3, Stay: 4] \n")
 
@@ -98,6 +99,12 @@ def main():
     new_state, rewards, goal = world.move(actions)
     world.plot_grid()
     print_status(goal, new_state, rewards, total_states)
+
+    print("Trying out reset")
+    world.reset()
+    world.plot_grid()
+    state = world.map_player_state()
+    assert state == initial_state
 
 
 if __name__ == '__main__':
