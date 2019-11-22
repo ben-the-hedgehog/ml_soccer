@@ -54,7 +54,7 @@ class World:
 
         grid = [['**'] * (self.cols + 2)]
 
-        for i in xrange(self.rows):
+        for i in range(self.rows):
             grid.append(['**', 'gB'] + ['  '] * (self.cols - 2) + ['gA', '**'])
 
         grid.append(['**'] * (self.cols + 2))
@@ -113,7 +113,7 @@ class World:
 
         self.grid = self.init_grid()
 
-        if len(self.players.keys()) > 0:
+        if len(list(self.players.keys())) > 0:
 
             for p_id in self.players:
                 player = self.players[p_id]
@@ -127,9 +127,9 @@ class World:
                 self.grid[player.y + 1][player.x + 1] = cell
 
         for r in self.grid:
-            print ' | '.join(r)
+            print(' | '.join(r))
 
-        print ''
+        print('')
 
     def check_collision(self, new_pos, moving_player, other_players):
         """ Method that verifies if there is a collision between two players.
@@ -154,7 +154,7 @@ class World:
             if new_pos.x == other_p.x and new_pos.y == other_p.y:
 
                 if self.commentator:
-                    print '{} collided with {}'.format(moving_player.p_id, other_p.p_id)
+                    print('{} collided with {}'.format(moving_player.p_id, other_p.p_id))
 
                 collision = True
 
@@ -163,7 +163,7 @@ class World:
                     moving_player.update_ball_pos(False)
 
                     if self.commentator:
-                        print "{} steals from {}".format(other_p.p_id, moving_player.p_id)
+                        print("{} steals from {}".format(other_p.p_id, moving_player.p_id))
 
         return collision
 
@@ -190,7 +190,7 @@ class World:
         if moving_player.x == self.goals[moving_player.p_id] and moving_player.has_ball:
 
             if self.commentator:
-                print "{} scored a goal!!".format(moving_player.p_id)
+                print("{} scored a goal!!".format(moving_player.p_id))
 
             goal = True
             r[moving_player.p_id] = self.goal_r[moving_player.p_id]
@@ -205,11 +205,11 @@ class World:
             if sum(other_goal.values()) > 0:
 
                 if self.commentator:
-                    print "{} scored an own goal!!".format(moving_player.p_id)
+                    print("{} scored an own goal!!".format(moving_player.p_id))
 
                 goal = True
 
-                for k in other_goal.keys():
+                for k in list(other_goal.keys()):
 
                     if other_goal[k]:
                         r[k] = self.goal_r[k]
@@ -238,7 +238,7 @@ class World:
         r = None
         goal = False
 
-        player_order = a.keys()
+        player_order = list(a.keys())
         np.random.shuffle(player_order)
         new_pos = Player(0, 0, False)
 
@@ -276,10 +276,10 @@ class World:
                 break
 
         if self.commentator:
-            print 'Player Order: {}'.format(player_order)
-            print 'Actions: {}'.format(a)
-            print 'A location: ({}, {})'.format(self.players['A'].x, self.players['A'].y)
-            print 'B location: ({}, {})'.format(self.players['B'].x, self.players['B'].y)
-            print ""
+            print('Player Order: {}'.format(player_order))
+            print('Actions: {}'.format(a))
+            print('A location: ({}, {})'.format(self.players['A'].x, self.players['A'].y))
+            print('B location: ({}, {})'.format(self.players['B'].x, self.players['B'].y))
+            print("")
 
         return self.map_player_state(), r, goal
